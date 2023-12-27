@@ -3,14 +3,45 @@ const editProfileButton = document.querySelector('.profile__edit-button');
 const addCardButton = document.querySelector('.profile__add-button');
 const cards = document.querySelectorAll('.card');
 
-//функция открытия модальных окон
+//функция открытия модальных окон и добавление слушвтелей
 
 function openModalHandle(modalSelector) {
   const modal = document.querySelector(modalSelector);
   if (modal) {
     modal.classList.add('popup_is-opened');
+    modal.addEventListener('click', closeModalOverlay);
+    document.addEventListener('keydown', closeModalOnEsc);
   }
 }
+
+//функция закрытия модальных окон и удаления слушателей
+
+function closeModalHandle(modalSelector) {
+  const modal = document.querySelector(modalSelector);
+  if (modal) {
+    modal.classList.remove('popup_is-opened');
+    modal.removeEventListener('click', closeModalOverlay);
+    document.removeEventListener('keydown', closeModalOnEsc);
+  }
+}
+
+//закрытие модального окна кликом по оверлею
+
+function closeModalOverlay(evt) {
+  if (evt.target === evt.currentTarget) {
+    closeModalHandle('.popup_is-opened');
+  }
+}
+
+//закрытик мадального окна клавишей Esc
+
+function closeModalOnEsc(evt) {
+  if(evt.key === 'Escape') {
+    closeModalHandle('.popup_is-opened');
+  }
+}
+
+
 
 //открываем модальное окно для редактирования профиля
 
@@ -24,7 +55,7 @@ addCardButton.addEventListener('click', function() {
   openModalHandle('.popup_type_new-card');
 })
 
-//перебираем массив карточек и каждой добавляе обработчик откртыия модального окна
+//перебираем массив карточек и каждой добавляем обработчик откртыия модального окна
 //паралельно передаём изображения и описание из currentTarget
 
 cards.forEach(card => {
@@ -47,14 +78,10 @@ function openModalWithImageAndCaption(imageUrl, imageCaption) {
   openModalHandle('.popup_type_image');
 }
 
-
 //добавляет обработчик события на закрытия модального окна всем модальным окнам
 
 modals.forEach(modal => {
+  modal.classList.add('popup_is-animated');
   const closeButton = modal.querySelector('.popup__close');
-  closeButton.addEventListener('click', function() {
-    modal.classList.remove('popup_is-opened');
-  })
+  closeButton.addEventListener('click', () => closeModalHandle('.popup_is-opened'))
 })
-
-//@todo закрытия окна по клику на overlay и Esc

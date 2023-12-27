@@ -4,6 +4,7 @@ const addCardButton = document.querySelector('.profile__add-button');
 const cards = document.querySelectorAll('.card');
 
 //функция открытия модальных окон
+
 function openModalHandle(modalSelector) {
   const modal = document.querySelector(modalSelector);
   if (modal) {
@@ -11,13 +12,20 @@ function openModalHandle(modalSelector) {
   }
 }
 
+//открываем модальное окно для редактирования профиля
+
 editProfileButton.addEventListener('click', function() {
   openModalHandle('.popup_type_edit');
 })
 
+//открываем модальное окно для добавления новой карточки
+
 addCardButton.addEventListener('click', function() {
   openModalHandle('.popup_type_new-card');
 })
+
+//перебираем массив карточек и каждой добавляе обработчик откртыия модального окна
+//паралельно передаём изображения и описание из currentTarget
 
 cards.forEach(card => {
   const cardImage = card.querySelector('.card__image');
@@ -27,6 +35,8 @@ cards.forEach(card => {
     openModalWithImageAndCaption(imageUrl, imageCaption);
   })
 })
+
+//функция которая открывает модальное окно с нужным нам изображением и описанием
 
 function openModalWithImageAndCaption(imageUrl, imageCaption) {
   const imageModal = document.querySelector('.popup_type_image');
@@ -46,3 +56,5 @@ modals.forEach(modal => {
     modal.classList.remove('popup_is-opened');
   })
 })
+
+//@todo закрытия окна по клику на overlay и Esc

@@ -1,11 +1,11 @@
-const kaliningradImage = new URL('../../images/kaliningrad.jpg', import.meta.url);
+const kaliningradImage = new URL('../images/kaliningrad.jpg', import.meta.url);
 const ashdodImage = new URL('../images/ashdod.jpg', import.meta.url);
 const haifaImage = new URL('../images/haifa.jpg', import.meta.url);
 const kaunasImage = new URL('../images/kaunas.jpg', import.meta.url);
 const batYamImage = new URL('../images/batyam.jpg', import.meta.url);
 const telAvivImage = new URL('../images/tel-aviv.jpg', import.meta.url);
 
-const initialCards = [
+export const initialCards = [
     {
       name: "Калининград",
       link: kaliningradImage,
@@ -31,3 +31,4 @@ const initialCards = [
       link: telAvivImage,
     }
 ];
+

@@ -8,8 +8,8 @@ addCardForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   
   const newCardData = {
-    name: addCard.elements.place_name.value,
-    link: addCard.elements.link.value
+    name: addCardForm.elements.place_name.value,
+    link: addCardForm.elements.link.value
   }
 
   const newCard = makeCard(newCardData, deleteCard, likeCard);

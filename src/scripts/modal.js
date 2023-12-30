@@ -2,6 +2,7 @@ const modals = document.querySelectorAll('.popup');
 const editProfileButton = document.querySelector('.profile__edit-button');
 const addCardButton = document.querySelector('.profile__add-button');
 const cards = document.querySelectorAll('.card');
+const form = document.querySelector('form')
 
 // функция открытия модальных окон и добавление слушвтелей
 
@@ -9,19 +10,23 @@ function openModalHandle(modalSelector) {
   const modal = document.querySelector(modalSelector);
   if (modal) {
     modal.classList.add('popup_is-opened');
-    modal.addEventListener('click', closeModalOverlay);
+    modal.addEventListener('click', closeModalOverlay(form));
     document.addEventListener('keyup', closeModalOnEsc);
   }
 }
 
 // функция закрытия модальных окон и удаления слушателей
 
-export function closeModalHandle(modalSelector) {
+export function closeModalHandle(modalSelector, form) {
   const modal = document.querySelector(modalSelector);
   if (modal) {
     modal.classList.remove('popup_is-opened');
     modal.removeEventListener('click', closeModalOverlay);
     document.removeEventListener('keyup', closeModalOnEsc);
+  }
+
+  if (form) {
+    form.reset();
   }
 }
 
@@ -81,6 +86,7 @@ export function openModalWithImageAndCaption(imageUrl, imageCaption) {
 
 modals.forEach(modal => {
   modal.classList.add('popup_is-animated');
+  const form = modal.querySelector('form')
   const closeButton = modal.querySelector('.popup__close');
-  closeButton.addEventListener('click', () => closeModalHandle('.popup_is-opened'))
+  closeButton.addEventListener('click', () => closeModalHandle('.popup_is-opened', form))
 })

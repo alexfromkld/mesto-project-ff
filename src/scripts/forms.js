@@ -1,10 +1,10 @@
 import { deleteCard, likeCard, makeCard, cardsList } from "./index";
 import {closeModalHandle} from './modal'
 
-const addCard = document.forms.new_place;
-const editProfile = document.forms.edit_profile;
+const addCardForm = document.forms.new_place;
+const editProfileForm = document.forms.edit_profile;
 
-addCard.addEventListener('submit', (evt) => {
+addCardForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   
   const newCardData = {
@@ -15,17 +15,19 @@ addCard.addEventListener('submit', (evt) => {
   const newCard = makeCard(newCardData, deleteCard, likeCard);
   cardsList.prepend(newCard);
 
-  addCard.reset();
+  addCardForm.reset();
   closeModalHandle('.popup_type_new-card');
 })
 
-editProfile.addEventListener('submit', (evt) => {
+editProfileForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
 
   const name = document.querySelector('.profile__title');
   const description = document.querySelector('.profile__description');
-  name.textContent = editProfile.elements.name.value;
-  description.textContent = editProfile.elements.description.value;
+  name.textContent = editProfileForm.elements.name.value;
+  description.textContent = editProfileForm.elements.description.value;
+
+  editProfileForm.reset();
 
   closeModalHandle('.popup_type_edit');
 })

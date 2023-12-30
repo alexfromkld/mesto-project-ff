@@ -10,7 +10,7 @@ function openModalHandle(modalSelector) {
   const modal = document.querySelector(modalSelector);
   if (modal) {
     modal.classList.add('popup_is-opened');
-    modal.addEventListener('click', closeModalOverlay(form));
+    modal.addEventListener('click', closeModalOverlay);
     document.addEventListener('keyup', closeModalOnEsc);
   }
 }

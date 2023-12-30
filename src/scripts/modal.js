@@ -16,7 +16,7 @@ function openModalHandle(modalSelector) {
 
 // функция закрытия модальных окон и удаления слушателей
 
-function closeModalHandle(modalSelector) {
+export function closeModalHandle(modalSelector) {
   const modal = document.querySelector(modalSelector);
   if (modal) {
     modal.classList.remove('popup_is-opened');

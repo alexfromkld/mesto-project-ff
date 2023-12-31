@@ -1,33 +1,34 @@
-import { deleteCard, likeCard, makeCard, cardsList } from "./index";
+import { deleteCard, likeCard, makeCard, cardsContainer } from "./index";
 import {closeModalHandle} from './modal'
 
-const addCardForm = document.forms.new_place;
-const editProfileForm = document.forms.edit_profile;
+export const addCardForm = document.forms.new_place;
+export const editProfileForm = document.forms.edit_profile;
+const nameInput = document.querySelector('.profile__title');
+const descriptionInput = document.querySelector('.profile__description');
 
-addCardForm.addEventListener('submit', (evt) => {
+export function addNewCard(evt) {
   evt.preventDefault();
-  
+
   const newCardData = {
     name: addCardForm.elements.place_name.value,
     link: addCardForm.elements.link.value
   }
 
   const newCard = makeCard(newCardData, deleteCard, likeCard);
-  cardsList.prepend(newCard);
-
   addCardForm.reset();
-  closeModalHandle('.popup_type_new-card');
-})
 
-editProfileForm.addEventListener('submit', (evt) => {
+  cardsContainer.prepend(newCard);
+  closeModalHandle('.popup_type_new-card');
+  console.log(newCard);
+}
+
+export function editProfile(evt) {
   evt.preventDefault();
 
-  const name = document.querySelector('.profile__title');
-  const description = document.querySelector('.profile__description');
-  name.textContent = editProfileForm.elements.name.value;
-  description.textContent = editProfileForm.elements.description.value;
+  nameInput.textContent = editProfileForm.elements.name.value;
+  descriptionInput.textContent = editProfileForm.elements.description.value;
 
   editProfileForm.reset();
 
   closeModalHandle('.popup_type_edit');
-})
+}

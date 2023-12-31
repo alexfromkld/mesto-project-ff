@@ -1,12 +1,15 @@
 import { initialCards } from "./cards";
 import { openModalWithImageAndCaption } from "./modal";
+import { addCardForm, editProfileForm } from "./forms";
+import { addNewCard } from "./forms";
+import { editProfile } from "./forms";
 // @todo: Темплейт карточки
 
 const cardsTemplate = document.querySelector('#card-template').content;
 
 // @todo: DOM узлы
 
-export const cardsList = document.querySelector('.places__list')
+export const cardsContainer = document.querySelector('.places__list')
 
 // @todo: Функция создания карточки
 
@@ -16,9 +19,9 @@ export function makeCard(cardData, deleteCard, likeCard) {
   card.querySelector('.card__title').textContent = cardData.name;
   const cardDescription = card.querySelector('.card__image').alt = `Фото города ${cardData.name}`
 
-  let deleteButton = card.querySelector('.card__delete-button');
+  const deleteButton = card.querySelector('.card__delete-button');
   deleteButton.addEventListener('click', deleteCard);
-  let likeButton = card.querySelector('.card__like-button');
+  const likeButton = card.querySelector('.card__like-button');
   likeButton.addEventListener('click', likeCard);
   card.querySelector('.card__image').addEventListener('click', () => openModalWithImageAndCaption(cardData.link, cardDescription));
   return card;
@@ -43,5 +46,13 @@ export function likeCard(evt) {
 
 // @todo: Вывести карточки на страницу
 
-initialCards.forEach(item => cardsList.append(makeCard(item, deleteCard, likeCard)));
+initialCards.forEach(item => cardsContainer.append(makeCard(item, deleteCard, likeCard)));
+
+// добавления обработчика на форму для добавления новой карточки
+
+addCardForm.addEventListener('submit', (evt) => addNewCard(evt));
+
+//добавления обработчика на форму редактирование профиля
+
+editProfileForm.addEventListener('submit', (evt) => editProfile(evt))
 

@@ -1,10 +1,11 @@
-import { deleteCard, likeCard, makeCard, cardsContainer } from "./index";
-import {closeModalHandle} from './modal'
+import { deleteCard, likeCard, makeCard } from "./cards";
+import { cardsContainer } from "./index";
+import {closeModal} from './modal';
 
 export const addCardForm = document.forms.new_place;
 export const editProfileForm = document.forms.edit_profile;
-const nameInput = document.querySelector('.profile__title');
-const descriptionInput = document.querySelector('.profile__description');
+export const nameInput = document.querySelector('.profile__title');
+export const descriptionInput = document.querySelector('.profile__description');
 
 export function addNewCard(evt) {
   evt.preventDefault();
@@ -18,8 +19,7 @@ export function addNewCard(evt) {
   addCardForm.reset();
 
   cardsContainer.prepend(newCard);
-  closeModalHandle('.popup_type_new-card');
-  console.log(newCard);
+  closeModal('.popup_type_new-card');
 }
 
 export function editProfile(evt) {
@@ -30,5 +30,5 @@ export function editProfile(evt) {
 
   editProfileForm.reset();
 
-  closeModalHandle('.popup_type_edit');
+  closeModal('.popup_type_edit');
 }

@@ -30,7 +30,8 @@ export const initialCards = [
 
 // @todo: Функция создания карточки
 
-export function makeCard(cardData, deleteCard, likeCard, openModal, openCard) {
+export function makeCard(cardData, deleteCard, likeCard, openModal) {
+  console.log(cardData);
   const card = cardsTemplate.querySelector('.card').cloneNode(true);
   card.querySelector('.card__image').src = cardData.link;
   card.querySelector('.card__title').textContent = cardData.name;
@@ -38,13 +39,18 @@ export function makeCard(cardData, deleteCard, likeCard, openModal, openCard) {
 
   const deleteButton = card.querySelector('.card__delete-button');
   deleteButton.addEventListener('click', deleteCard);
+
   const likeButton = card.querySelector('.card__like-button');
   likeButton.addEventListener('click', likeCard);
-  card.querySelector('.card__image').addEventListener('click', (evt) => {
-    const imageUrl = evt.currentTarget.src;
-    const imageCaption = evt.currentTarget.alt;
-    openModalWithImageAndCaption(imageUrl, imageCaption);
-  });
+
+  // card.querySelector('.card__image').addEventListener('click', (evt) => {
+  //   const imageUrl = evt.currentTarget.src;
+  //   const imageCaption = evt.currentTarget.alt;
+  //   openModalWithImageAndCaption(imageUrl, imageCaption);
+  // });
+  const cardImage = card.querySelector('.card__image');
+  cardImage.addEventListener('click', () => openModal(cardData.link, cardData.name))
+  //card.querySelector('.card__image').addEventListener('click', () => openModal(cardData.link, cardData.name))
   return card;
 }
 

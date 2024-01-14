@@ -24,35 +24,30 @@ export function openModal(modalElement, form) {
 
 // функция закрытия модальных окон и удаления слушателей
 
-export function closeModal(modalSelector) {
-  const modal = document.querySelector(modalSelector)
-  if (modal) {
-    modal.classList.remove('popup_is-opened');
-    modal.removeEventListener('click', closeModalOverlay);
+export function closeModal(element) {
+  if(element) {
+    console.log(element);
+    element.classList.remove('popup_is-opened');
+    element.removeEventListener('click', closeModalOverlay)
     document.removeEventListener('keyup', closeModalOnEsc);
   }
 }
-
-// export function closeModal(element) {
-//   if(element) {
-//     element.classList.remove(openedModal);
-//     element.removeEventListener('click', closeModalOverlay)
-//     document.removeEventListener('keyup', closeModalOnEsc);
-//   }
-// }
 
 // закрытие модального окна кликом по оверлею
 
 function closeModalOverlay(evt) {
   if (evt.target === evt.currentTarget) {
-    closeModal('.popup_is-opened');
+    console.log(evt);
+    const element = evt.target;
+    closeModal(element);
   }
 }
 
-// закрытик мадального окна клавишей Esc
+// закрытие мадального окна клавишей Esc
 
-function closeModalOnEsc(evt) {
+export function closeModalOnEsc(evt) {
   if(evt.key === 'Escape') {
-    closeModal('.popup_is-opened');
+    const element = document.querySelector('.popup_is-opened')
+    closeModal(element);
   }
 }

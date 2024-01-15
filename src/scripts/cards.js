@@ -1,6 +1,3 @@
-import { cardsTemplate } from "./index.js";
-import { openModalWithImageAndCaption } from "./index.js";
-
 export const initialCards = [
     {
       name: "Калининград",
@@ -27,48 +24,5 @@ export const initialCards = [
       link: 'https://lh5.googleusercontent.com/p/AF1QipOppRB87fzikkJN5SV6l3ZXSbAicMtBMaPO8Zfc=w1080-h624-n-k-no',
     }
 ];
-
-// @todo: Функция создания карточки
-
-export function makeCard(cardData, deleteCard, likeCard, openModal) {
-  console.log(cardData);
-  const card = cardsTemplate.querySelector('.card').cloneNode(true);
-  card.querySelector('.card__image').src = cardData.link;
-  card.querySelector('.card__title').textContent = cardData.name;
-  card.querySelector('.card__image').alt = `Фото города ${cardData.name}`;
-
-  const deleteButton = card.querySelector('.card__delete-button');
-  deleteButton.addEventListener('click', deleteCard);
-
-  const likeButton = card.querySelector('.card__like-button');
-  likeButton.addEventListener('click', likeCard);
-
-  // card.querySelector('.card__image').addEventListener('click', (evt) => {
-  //   const imageUrl = evt.currentTarget.src;
-  //   const imageCaption = evt.currentTarget.alt;
-  //   openModalWithImageAndCaption(imageUrl, imageCaption);
-  // });
-  const cardImage = card.querySelector('.card__image');
-  cardImage.addEventListener('click', () => openModal(cardData.link, cardData.name))
-  //card.querySelector('.card__image').addEventListener('click', () => openModal(cardData.link, cardData.name))
-  return card;
-}
-
-// @todo: Функция удаления карточки
-
-export function deleteCard(event) {
-  let cardEl = event.target.closest('.card');
-  cardEl.remove();
-}
-
-// функция лайка карточек
-
-export function likeCard(evt) {
-  if(evt.target.classList.contains('card__like-button_is-active')) {
-    evt.target.classList.remove('card__like-button_is-active')
-  } else {
-    evt.target.classList.add('card__like-button_is-active')
-  }
-}
 
 

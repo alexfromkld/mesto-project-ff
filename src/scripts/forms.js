@@ -1,4 +1,4 @@
-import { deleteCard, likeCard, makeCard } from "./cards";
+import { deleteCard, likeCard, makeCard } from "./card";
 import { cardsContainer } from "./index";
 import {closeModal} from './modal';
 import { openModalWithImageAndCaption } from "./index";
@@ -30,8 +30,6 @@ export function editProfile(evt) {
 
   nameInput.textContent = editProfileForm.elements.name.value;
   descriptionInput.textContent = editProfileForm.elements.description.value;
-
-  editProfileForm.reset();
 
   closeModal(editProfileModal)
 }

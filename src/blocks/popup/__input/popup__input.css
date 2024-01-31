@@ -7,7 +7,21 @@
   line-height: 18px;
   box-sizing: border-box;
   padding: 10px 0 0;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
+}
+
+.popup__input_type_error {
+  border-bottom-color: #F00;
+}
+
+.popup__form-error_message {
+  color: #F00;
+  font-size: 12px;
+  visibility: hidden;
+}
+
+.popup__form-error_message_active {
+  visibility: visible;
 }
 
 .popup__input:last-of-type {

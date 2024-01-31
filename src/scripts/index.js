@@ -3,11 +3,20 @@ import { addCardForm, editProfileForm, addNewCard, editProfile, nameInput, descr
 import { makeCard, deleteCard, likeCard } from "./card";
 import { openModal, closeModal } from "./modal";
 import { editProfileButton, editProfileModal, addCardButton, addNewCardModal } from "./modal";
+import { clearValidation, enableValidation } from "./validation";
 
 const modals = document.querySelectorAll('.popup');
 const imagePopup = document.querySelector('.popup_type_image');
 const imageElement = imagePopup.querySelector('.popup__image');
 const imageDescription = imagePopup.querySelector('.popup__caption');
+const validationConfig = {
+  formSelector: 'popup__form',
+  inputSelector: 'popup__input',
+  submitButtonSelector: 'popup__button',
+  inactiveButtonClass: 'popup__button_inactive',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__form-error_message_active'
+}
 
 // функция открытия попапа для редактирования профайла, которая подставляет в инпуты текущие данные
 
@@ -16,6 +25,7 @@ function openEditProfilePopup(form) {
     form.name.value = nameInput.textContent;
     form.description.value = descriptionInput.textContent;
     openModal(editProfileModal);
+    clearValidation(form, validationConfig);
   }
 }
 
@@ -50,7 +60,10 @@ initialCards.forEach(item => cardsContainer.append(makeCard(item, deleteCard, li
 
 // добавления обработчика на форму для добавления новой карточки
 
-addCardForm.addEventListener('submit', (evt) => addNewCard(evt));
+addCardForm.addEventListener('submit', (evt) => {
+  addNewCard(evt)
+  clearValidation(evt.srcElement, validationConfig);
+});
 
 //добавления обработчика на форму редактирование профиля
 
@@ -63,6 +76,7 @@ editProfileButton.addEventListener('click', () => openEditProfilePopup(editProfi
 
 // открываем модальное окно для добавления новой карточки
 
-addCardButton.addEventListener('click', () => openModal(addNewCardModal))
-console.log(editProfileForm);
+addCardButton.addEventListener('click', () => openModal(addNewCardModal));
+
+enableValidation(validationConfig);
 

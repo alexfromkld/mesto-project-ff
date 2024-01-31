@@ -1,6 +1,6 @@
 import { deleteCard, likeCard, makeCard } from "./card";
 import { cardsContainer } from "./index";
-import {closeModal} from './modal';
+import { closeModal } from './modal';
 import { openModalWithImageAndCaption } from "./index";
 
 export const addCardForm = document.forms.new_place;
@@ -9,6 +9,7 @@ export const nameInput = document.querySelector('.profile__title');
 export const descriptionInput = document.querySelector('.profile__description');
 const addCardModal = document.querySelector('.popup_type_new-card')
 const editProfileModal = document.querySelector('.popup_type_edit')
+//const editProfileSubmitButton = addCardForm.querySelector('.popup__button');
 
 export function addNewCard(evt) {
   evt.preventDefault();
@@ -20,9 +21,10 @@ export function addNewCard(evt) {
 
   const newCard = makeCard(newCardData, deleteCard, likeCard, openModalWithImageAndCaption);
   addCardForm.reset();
-
+  //evt.submitter.disabled = true;
   cardsContainer.prepend(newCard);
   closeModal(addCardModal)
+
 }
 
 export function editProfile(evt) {
@@ -30,6 +32,5 @@ export function editProfile(evt) {
 
   nameInput.textContent = editProfileForm.elements.name.value;
   descriptionInput.textContent = editProfileForm.elements.description.value;
-
-  closeModal(editProfileModal)
+  closeModal(editProfileModal);
 }

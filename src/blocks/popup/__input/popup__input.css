@@ -18,6 +18,8 @@
   color: #F00;
   font-size: 12px;
   visibility: hidden;
+  min-height: 30px;
+  /* position: absolute; */
 }
 
 .popup__form-error_message_active {

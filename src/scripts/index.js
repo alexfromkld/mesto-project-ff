@@ -3,20 +3,13 @@ import { addCardForm, editProfileForm, addNewCard, editProfile, nameInput, descr
 import { makeCard, deleteCard, likeCard } from "./card";
 import { openModal, closeModal } from "./modal";
 import { editProfileButton, editProfileModal, addCardButton, addNewCardModal } from "./modal";
-import { clearValidation, enableValidation } from "./validation";
+import { clearValidation, enableValidation, validationConfig } from "./validation";
 
 const modals = document.querySelectorAll('.popup');
 const imagePopup = document.querySelector('.popup_type_image');
 const imageElement = imagePopup.querySelector('.popup__image');
 const imageDescription = imagePopup.querySelector('.popup__caption');
-const validationConfig = {
-  formSelector: 'popup__form',
-  inputSelector: 'popup__input',
-  submitButtonSelector: 'popup__button',
-  inactiveButtonClass: 'popup__button_inactive',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__form-error_message_active'
-}
+
 
 // функция открытия попапа для редактирования профайла, которая подставляет в инпуты текущие данные
 
@@ -24,8 +17,8 @@ function openEditProfilePopup(form) {
   if(form) {
     form.name.value = nameInput.textContent;
     form.description.value = descriptionInput.textContent;
+    clearValidation(editProfileModal, validationConfig);
     openModal(editProfileModal);
-    clearValidation(form, validationConfig);
   }
 }
 
@@ -61,8 +54,8 @@ initialCards.forEach(item => cardsContainer.append(makeCard(item, deleteCard, li
 // добавления обработчика на форму для добавления новой карточки
 
 addCardForm.addEventListener('submit', (evt) => {
-  addNewCard(evt)
   clearValidation(evt.srcElement, validationConfig);
+  addNewCard(evt);
 });
 
 //добавления обработчика на форму редактирование профиля
@@ -71,8 +64,9 @@ editProfileForm.addEventListener('submit', (evt) => editProfile(evt));
 
 // открываем модальное окно для редактирования профиля
 
-//editProfileButton.addEventListener('click', () => openModal(editProfileModal, editProfileForm));
-editProfileButton.addEventListener('click', () => openEditProfilePopup(editProfileForm));
+editProfileButton.addEventListener('click', () => {
+  openEditProfilePopup(editProfileForm);
+});
 
 // открываем модальное окно для добавления новой карточки
 

@@ -1,3 +1,12 @@
+export const validationConfig = {
+  formSelector: 'popup__form',
+  inputSelector: 'popup__input',
+  submitButtonSelector: 'popup__button',
+  inactiveButtonClass: 'popup__button_inactive',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__form-error_message_active'
+}
+
 //выводит ошибку на конкретной форме и на конкретном инпуте
 
 const showInputError = (formElement, inputElement, errorMessage, validationConfig) => {
@@ -86,14 +95,11 @@ const toggleButtonState = (formElement, validationConfig) => {
 
 export const clearValidation = (formElement, validationConfig) => {
   const inputList = Array.from(formElement.querySelectorAll(`.${validationConfig.inputSelector}`));
-  if (hasInvalidInput(inputList)) {
-    toggleButtonState(formElement, validationConfig)
-  } else {
-    inputList.forEach(inputElement => {
-      hideInputError(formElement, inputElement, validationConfig);
-    })
-    toggleButtonState(formElement, validationConfig);
-  }
+  inputList.forEach(inputElement => {
+    inputElement.setCustomValidity('');
+    hideInputError(formElement, inputElement, validationConfig);
+  })
+  toggleButtonState(formElement, validationConfig)
 }
 
 

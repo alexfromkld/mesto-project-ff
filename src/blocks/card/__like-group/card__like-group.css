@@ -1,0 +1,11 @@
+.card__like-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.card__likes {
+  margin-block: 0;
+  text-align: center;
+}

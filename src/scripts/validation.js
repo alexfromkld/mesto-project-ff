@@ -101,7 +101,3 @@ export const clearValidation = (formElement, validationConfig) => {
   })
   toggleButtonState(formElement, validationConfig)
 }
-
-
-
-//остановились на clearValidation и enableValidation

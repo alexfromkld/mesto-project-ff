@@ -1,8 +1,10 @@
 export const editProfileButton = document.querySelector('.profile__edit-button');
 export const addCardButton = document.querySelector('.profile__add-button');
+export const changeAvatarButton = document.querySelector('.profile__image');
 export const editProfileModal = document.querySelector('.popup_type_edit');
 export const addNewCardModal = document.querySelector('.popup_type_new-card');
 export const openedModal = document.querySelector('.popup_is-opened');
+export const changeAvatarModal = document.querySelector('.popup_change_avatar');
 
 // функция открытия модальных окон и добавление слушвтелей
 

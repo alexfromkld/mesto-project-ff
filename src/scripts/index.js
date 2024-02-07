@@ -1,15 +1,32 @@
-import { initialCards } from "./cards";
-import { addCardForm, editProfileForm, addNewCard, editProfile, nameInput, descriptionInput } from "./forms";
+import { addCardForm, editProfileForm, addNewCard, editProfile, nameInput, descriptionInput, changeAvatarForm, editUserAvatar, userAvatar } from "./forms";
 import { makeCard, deleteCard, likeCard } from "./card";
 import { openModal, closeModal } from "./modal";
-import { editProfileButton, editProfileModal, addCardButton, addNewCardModal } from "./modal";
+import { editProfileButton, editProfileModal, addCardButton, addNewCardModal, changeAvatarModal, changeAvatarButton } from "./modal";
 import { clearValidation, enableValidation, validationConfig } from "./validation";
+import { changeAvatar, getInititalCards, getUserData } from "./api";
+
+export let userData;
+export let cardsList;
+
+// получаю информацию о пользователе и вывожу карточки на страницу
+Promise.all([getUserData(), getInititalCards()])
+  .then(([data, cards]) => {
+    console.log(data);
+    userData = data;
+    cardsList = cards;
+    nameInput.textContent = data.name;
+    descriptionInput.textContent = data.about;
+    userAvatar.style.backgroundImage = `url('${data.avatar}')`;
+    console.log(cards);
+    cards.forEach(card => {
+      cardsContainer.append(makeCard(card, data, deleteCard, likeCard, openModalWithImageAndCaption))
+    })
+});
 
 const modals = document.querySelectorAll('.popup');
 const imagePopup = document.querySelector('.popup_type_image');
 const imageElement = imagePopup.querySelector('.popup__image');
 const imageDescription = imagePopup.querySelector('.popup__caption');
-
 
 // функция открытия попапа для редактирования профайла, которая подставляет в инпуты текущие данные
 
@@ -47,20 +64,35 @@ export const cardsTemplate = document.querySelector('#card-template').content;
 
 export const cardsContainer = document.querySelector('.places__list')
 
-// @todo: Вывести карточки на страницу
-
-initialCards.forEach(item => cardsContainer.append(makeCard(item, deleteCard, likeCard, openModalWithImageAndCaption)));
-
 // добавления обработчика на форму для добавления новой карточки
 
 addCardForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
   clearValidation(evt.srcElement, validationConfig);
   addNewCard(evt);
 });
 
 //добавления обработчика на форму редактирование профиля
 
-editProfileForm.addEventListener('submit', (evt) => editProfile(evt));
+editProfileForm.addEventListener('submit', (evt) => {
+  editProfile(evt, nameInput, descriptionInput);
+  getUserData()
+    .then(res => {
+      nameInput.textContent = res.name;
+      descriptionInput.textContent = res.about;
+    })
+});
+
+//добавления обработчика на форму изменения аватара
+
+changeAvatarForm.addEventListener('submit', (evt) => {
+  clearValidation(evt.srcElement, validationConfig)
+  editUserAvatar(evt);
+  getUserData()
+    .then(res => {
+      userAvatar.style.backgroundImage = `url('${res.avatar}')`;
+    })
+})
 
 // открываем модальное окно для редактирования профиля
 
@@ -71,6 +103,10 @@ editProfileButton.addEventListener('click', () => {
 // открываем модальное окно для добавления новой карточки
 
 addCardButton.addEventListener('click', () => openModal(addNewCardModal));
+
+//открываем модальное окно для смены аватара
+
+changeAvatarButton.addEventListener('click', () => openModal(changeAvatarModal))
 
 enableValidation(validationConfig);
 

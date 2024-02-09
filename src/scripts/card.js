@@ -5,9 +5,10 @@ import { deleteCardAPI, addLike, deleteLike } from "./api.js";
 
 export function makeCard(cardData, userData, deleteCard, likeCard, openModal) {
   const card = cardsTemplate.querySelector('.card').cloneNode(true);
-  card.querySelector('.card__image').src = cardData.link;
+  const cardImage = card.querySelector('.card__image');
+  cardImage.src = cardData.link;
+  cardImage.alt = `Фото: ${cardData.name}`;
   card.querySelector('.card__title').textContent = cardData.name;
-  card.querySelector('.card__image').alt = `Фото города ${cardData.name}`;
   card.querySelector('.card__likes').textContent = cardData.likes.length.toString();
 
   if(userData._id === cardData.owner._id){
@@ -21,16 +22,15 @@ export function makeCard(cardData, userData, deleteCard, likeCard, openModal) {
 
   const likeButton = card.querySelector('.card__like-button');
   const likeCounter = card.querySelector('.card__likes')
-  if(cardData.likes != 0){
-    cardData.likes.forEach(user => {
-      if(user._id === userData._id){
-        likeButton.classList.add('card__like-button_is-active');
-      }
+  if(cardData.likes !== 0){
+    const islikedByMe = cardData.likes.some(user => {
+      return user._id === userData._id
     })
+    if(islikedByMe) {
+      likeButton.classList.add('card__like-button_is-active');
+    }
   }
   likeButton.addEventListener('click', (event) => likeCard(event, cardData._id, likeCounter));
-
-  const cardImage = card.querySelector('.card__image');
   cardImage.addEventListener('click', () => openModal(cardData.link, cardData.name))
   return card;
 }
@@ -42,6 +42,7 @@ export function deleteCard(event, cardId) {
     .then(res => {
       console.log(res)
     })
+    .catch(err => console.log(err))
   let cardEl = event.target.closest('.card');
   cardEl.remove();
 }
@@ -57,6 +58,7 @@ export function likeCard(evt, id, likeCounter) {
         evt.target.classList.remove('card__like-button_is-active')
         likeCounter.textContent = res.likes.length.toString();
       })
+      .catch(err => console.log(err))
   } else if(!evt.target.classList.contains('card_like-button_is-active')) {
     addLike(id)
       .then(res => {
@@ -64,8 +66,6 @@ export function likeCard(evt, id, likeCounter) {
         evt.target.classList.add('card__like-button_is-active');
         likeCounter.textContent = res.likes.length.toString();
       })
+      .catch(err => console.log(err))
   }
 }
-
-
-//if someCard.likes have userDataID button always active

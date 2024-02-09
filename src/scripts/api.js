@@ -6,18 +6,20 @@ const config = {
   }
 }
 
+const handleJsonResponse = (res) => {
+  if(res.ok) {
+    return res.json();
+  }
+  return Promise.reject(`Ошибка: ${res.status}`)
+};
+
 //получение от сервера информации о пользователе
 
 export const getUserData = () => {
   return fetch(`${config.baseUrl}/users/me`, {
     headers: config.headers
   })
-  .then(res => {
-    if(res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`)
-  })
+  .then(handleJsonResponse)
   .catch(err => {
     console.log(err)
   })
@@ -29,12 +31,7 @@ export const getInititalCards = () => {
   return fetch(`${config.baseUrl}/cards`, {
     headers: config.headers
   })
-  .then(res => {
-    if(res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`)
-  })
+  .then(handleJsonResponse)
   .catch(err => {
     console.log(err);
   })
@@ -43,8 +40,6 @@ export const getInititalCards = () => {
 //запрос серверу на изменение данных пользователя
 
 export const editProfileInfo = (button, name, about) => {
-  button.disabled = true;
-  button.textContent = 'Сохранение...';
   return fetch(`${config.baseUrl}/users/me`, {
   method: 'PATCH',
   headers: config.headers,
@@ -53,14 +48,7 @@ export const editProfileInfo = (button, name, about) => {
     about: about
   })
 })
-  .then(res => {
-    if(res.ok) {
-      button.disabled = false;
-      button.textContent = 'Сохранить';
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`)
-  })
+  .then(handleJsonResponse)
   .catch(err => {
     console.log(err);
   })
@@ -69,8 +57,6 @@ export const editProfileInfo = (button, name, about) => {
 //отправление запроса на добавление карточки на сервер
 
 export const postNewCard = (button ,name, link) => {
-  button.disabled = true;
-  button.textContent = 'Сохранение...';
   return fetch(`${config.baseUrl}/cards`, {
     method: 'POST',
     headers: config.headers,
@@ -79,14 +65,7 @@ export const postNewCard = (button ,name, link) => {
       link: link
     })
   })
-  .then(res => {
-    if(res.ok) {
-      button.disabled = false;
-      button.textContent = 'Сохранить';
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`)
-  })
+  .then(handleJsonResponse)
   .catch(err => {
     console.log(err);
   })
@@ -99,12 +78,7 @@ export const deleteCardAPI = (id) => {
     method: 'DELETE',
     headers: config.headers
   })
-  .then(res => {
-    if(res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`)
-  })
+  .then(handleJsonResponse)
   .catch(err => {
     console.log(err)
   })
@@ -117,12 +91,7 @@ export const addLike = (id) => {
     method: 'PUT',
     headers: config.headers
   })
-  .then(res => {
-    if(res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`)
-  })
+  .then(handleJsonResponse)
   .catch(err => {
     console.log(err);
   })
@@ -135,12 +104,7 @@ export const deleteLike = (id) => {
     method: 'DELETE',
     headers: config.headers
   })
-  .then(res => {
-    if(res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`)
-  })
+  .then(handleJsonResponse)
   .catch(err => {
     console.log(err);
   })
@@ -149,8 +113,6 @@ export const deleteLike = (id) => {
 //запрос на смену аватара
 
 export const changeAvatar = (button, avatar) => {
-  button.disabled = true;
-  button.textContent = 'Сохранение...';
   return fetch(`${config.baseUrl}/users/me/avatar`, {
     method: 'PATCH',
     headers: config.headers,
@@ -158,21 +120,10 @@ export const changeAvatar = (button, avatar) => {
       avatar: avatar
     })
   })
-  .then(res => {
-    if(res.ok) {
-      button.disabled = false;
-      button.textContent = 'Сохранить';
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`)
-  })
+  .then(handleJsonResponse)
   .catch(err => {
     console.log(err);
   })
-}
-
-const isLoading = (button) => {
-
 }
 
   

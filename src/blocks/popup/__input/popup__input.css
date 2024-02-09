@@ -15,11 +15,11 @@
 }
 
 .popup__form-error_message {
+  display: block;
   color: #F00;
   font-size: 12px;
   visibility: hidden;
-  min-height: 30px;
-  /* position: absolute; */
+  min-height: 2em;
 }
 
 .popup__form-error_message_active {

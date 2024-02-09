@@ -78,7 +78,6 @@ const hasInvalidInput = inputList => {
 //проверка валидности инпутов в случае положительной проверки кнопка активна, в противном - нет
 
 const toggleButtonState = (formElement, validationConfig) => {
-
   const buttonElement = formElement.querySelector(`.${validationConfig.submitButtonSelector}`);
   const inputList = Array.from(formElement.querySelectorAll(`.${validationConfig.inputSelector}`));
 
@@ -95,9 +94,11 @@ const toggleButtonState = (formElement, validationConfig) => {
 
 export const clearValidation = (formElement, validationConfig) => {
   const inputList = Array.from(formElement.querySelectorAll(`.${validationConfig.inputSelector}`));
+  const buttonElement = formElement.querySelector(`.${validationConfig.submitButtonSelector}`);
   inputList.forEach(inputElement => {
     inputElement.setCustomValidity('');
     hideInputError(formElement, inputElement, validationConfig);
   })
-  toggleButtonState(formElement, validationConfig)
+  buttonElement.disabled = true;
+  buttonElement.classList.add(validationConfig.inactiveButtonClass);
 }

@@ -18,15 +18,28 @@ const addCardFormButton = addCardForm.querySelector('.button');
 const editProfileButton = editProfileForm.querySelector('.button');
 const changeAvatarButton = changeAvatarForm.querySelector('.button');
 
+//меняет состояние кнопки на момент отправки и получения ответа с сервера
+
+const isLoading = (button, isLoading) => {
+  if(isLoading) {
+    button.disabled = true;
+    button.textContent = 'Сохранение...'
+  } else {
+    button.disabled = false;
+    button.textContent = 'Сохранить';
+  }
+}
+
 export function addNewCard(evt) {
   evt.preventDefault();
+  isLoading(addCardFormButton, true);
   const newCardData = {
     name: addCardForm.elements.place_name.value,
     link: addCardForm.elements.link.value
   }
   postNewCard(addCardFormButton, newCardData.name, newCardData.link)
     .then(postedCard => {
-      console.log(postedCard);
+      isLoading(addCardFormButton, false);
       cardsContainer.prepend(makeCard(postedCard, userData, deleteCard, likeCard, openModalWithImageAndCaption))
     })
     .catch(err => {
@@ -40,11 +53,12 @@ export function addNewCard(evt) {
 
 export function editProfile(evt) {
   evt.preventDefault();
+  isLoading(addCardFormButton, true);
   const name = editProfileForm.elements.name.value;
   const about = editProfileForm.elements.description.value;
   editProfileInfo(editProfileButton, name, about)
     .then(updatedUserData => {
-      console.log(updatedUserData);
+      isLoading(addCardFormButton, false);
       nameInput.textContent = updatedUserData.name;
       descriptionInput.textContent = updatedUserData.about;
     })
@@ -52,16 +66,18 @@ export function editProfile(evt) {
       console.log(err);
     })
     .finally(() => {
+      editProfileForm.reset();
       closeModal(editProfileModal);
     })
 }
 
 export function editUserAvatar(evt) {
   evt.preventDefault();
+  isLoading(addCardFormButton, true);
   const avatar = changeAvatarForm.elements.avatar_link.value;
   changeAvatar(changeAvatarButton, avatar)
     .then(user => {
-      console.log(user.avatar)
+      isLoading(addCardFormButton, false);
       userAvatar.style.backgroundImage = `url('${user.avatar}')`;
     })
     .catch(err => console.log(err))

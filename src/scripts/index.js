@@ -3,7 +3,7 @@ import { makeCard, deleteCard, likeCard } from "./card";
 import { openModal, closeModal } from "./modal";
 import { editProfileButton, editProfileModal, addCardButton, addNewCardModal, changeAvatarModal, changeAvatarButton } from "./modal";
 import { clearValidation, enableValidation, validationConfig } from "./validation";
-import { changeAvatar, getInititalCards, getUserData } from "./api";
+import { getInititalCards, getUserData } from "./api";
 
 export let userData;
 export let cardsList;
@@ -11,13 +11,11 @@ export let cardsList;
 // получаю информацию о пользователе и вывожу карточки на страницу
 Promise.all([getUserData(), getInititalCards()])
   .then(([data, cards]) => {
-    console.log(data);
     userData = data;
     cardsList = cards;
     nameInput.textContent = data.name;
     descriptionInput.textContent = data.about;
     userAvatar.style.backgroundImage = `url('${data.avatar}')`;
-    console.log(cards);
     cards.forEach(card => {
       cardsContainer.append(makeCard(card, data, deleteCard, likeCard, openModalWithImageAndCaption))
     })
@@ -68,8 +66,8 @@ export const cardsContainer = document.querySelector('.places__list')
 
 addCardForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
-  clearValidation(evt.srcElement, validationConfig);
   addNewCard(evt);
+  //clearValidation(evt.srcElement, validationConfig);
 });
 
 //добавления обработчика на форму редактирование профиля
@@ -81,6 +79,7 @@ editProfileForm.addEventListener('submit', (evt) => {
       nameInput.textContent = res.name;
       descriptionInput.textContent = res.about;
     })
+    .catch(err => console.log(err))
 });
 
 //добавления обработчика на форму изменения аватара
@@ -92,6 +91,7 @@ changeAvatarForm.addEventListener('submit', (evt) => {
     .then(res => {
       userAvatar.style.backgroundImage = `url('${res.avatar}')`;
     })
+    .catch(err => console.log(err))
 })
 
 // открываем модальное окно для редактирования профиля
@@ -102,7 +102,10 @@ editProfileButton.addEventListener('click', () => {
 
 // открываем модальное окно для добавления новой карточки
 
-addCardButton.addEventListener('click', () => openModal(addNewCardModal));
+addCardButton.addEventListener('click', () => {
+  clearValidation(addCardForm, validationConfig)
+  openModal(addNewCardModal)
+});
 
 //открываем модальное окно для смены аватара
 

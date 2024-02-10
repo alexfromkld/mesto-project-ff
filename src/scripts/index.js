@@ -19,7 +19,8 @@ Promise.all([getUserData(), getInititalCards()])
     cards.forEach(card => {
       cardsContainer.append(makeCard(card, data, deleteCard, likeCard, openModalWithImageAndCaption))
     })
-});
+  })
+  .catch(err => console.log(err))
 
 const modals = document.querySelectorAll('.popup');
 const imagePopup = document.querySelector('.popup_type_image');
@@ -67,7 +68,6 @@ export const cardsContainer = document.querySelector('.places__list')
 addCardForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   addNewCard(evt);
-  //clearValidation(evt.srcElement, validationConfig);
 });
 
 //добавления обработчика на форму редактирование профиля

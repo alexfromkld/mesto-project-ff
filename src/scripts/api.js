@@ -20,9 +20,6 @@ export const getUserData = () => {
     headers: config.headers
   })
   .then(handleJsonResponse)
-  .catch(err => {
-    console.log(err)
-  })
 }
 
 //получение карточек с сервера
@@ -32,9 +29,6 @@ export const getInititalCards = () => {
     headers: config.headers
   })
   .then(handleJsonResponse)
-  .catch(err => {
-    console.log(err);
-  })
 }
 
 //запрос серверу на изменение данных пользователя
@@ -49,9 +43,6 @@ export const editProfileInfo = (button, name, about) => {
   })
 })
   .then(handleJsonResponse)
-  .catch(err => {
-    console.log(err);
-  })
 }
 
 //отправление запроса на добавление карточки на сервер
@@ -66,9 +57,6 @@ export const postNewCard = (button ,name, link) => {
     })
   })
   .then(handleJsonResponse)
-  .catch(err => {
-    console.log(err);
-  })
 }
 
 //запрос на удаление карточки с сервера
@@ -79,9 +67,6 @@ export const deleteCardAPI = (id) => {
     headers: config.headers
   })
   .then(handleJsonResponse)
-  .catch(err => {
-    console.log(err)
-  })
 }
 
 //запрос на добавления лайка
@@ -92,9 +77,6 @@ export const addLike = (id) => {
     headers: config.headers
   })
   .then(handleJsonResponse)
-  .catch(err => {
-    console.log(err);
-  })
 }
 
 //запрос на удаление лайка
@@ -105,9 +87,6 @@ export const deleteLike = (id) => {
     headers: config.headers
   })
   .then(handleJsonResponse)
-  .catch(err => {
-    console.log(err);
-  })
 }
 
 //запрос на смену аватара
@@ -121,9 +100,6 @@ export const changeAvatar = (button, avatar) => {
     })
   })
   .then(handleJsonResponse)
-  .catch(err => {
-    console.log(err);
-  })
 }
 
   
